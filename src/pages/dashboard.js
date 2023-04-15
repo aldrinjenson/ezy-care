@@ -3,6 +3,7 @@ import { useState } from "react"
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut
 } from "firebase/auth"
 
 import app, { auth } from "@/configs/firebase"
@@ -23,16 +24,13 @@ export default function Dashboard() {
 
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user
         console.log(user)
-        // ...
       })
       .catch((error) => {
         const errorCode = error.code
         const errorMessage = error.message
         console.log(errorCode, errorMessage)
-        // ..
       })
   }
 
@@ -49,10 +47,21 @@ export default function Dashboard() {
         console.log(errorCode, errorMessage)
       })
   }
+
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Signed out successfully")
+      })
+      .catch((error) => {
+        // An error happened.
+      })
+  }
+
   return (
     <button
       onClick={(e) => {
-        login(e)
+        logout(e)
       }}
     >
       signup
