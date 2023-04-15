@@ -6,6 +6,7 @@ function Onboarding() {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
 
   const handleSubmit = (e) => {
@@ -16,6 +17,7 @@ function Onboarding() {
     } else {
       toast("Patient registered successfully");
     }
+    
   };
 
   return (
@@ -70,6 +72,22 @@ function Onboarding() {
             onChange={(e) => setBloodGroup(e.target.value)}
             className='border rounded-lg py-2 px-3 text-gray-700'
             placeholder='Enter blood group'
+          />
+        </div>
+        <div className='flex flex-col mb-4'>
+          <label
+            htmlFor='email'
+            className='mb-2 font-semibold text-gray-700'
+          >
+            Email
+          </label>
+          <input
+            id='email'
+            name='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className='border rounded-lg py-2 px-3 text-gray-700'
+            placeholder='Enter email'
           />
         </div>
         <div className='flex flex-col mb-4'>
