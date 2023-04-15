@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import {
   createUserWithEmailAndPassword,
@@ -8,6 +8,9 @@ import {
 
 import app, { auth } from "@/configs/firebase"
 
+import { MdLogout } from "react-icons/md"
+import { FiSettings } from "react-icons/fi"
+
 import Navbar from "@/components/Navbar"
 import Recorder from "@/components/Recorder"
 import Sidebar from "@/components/Sidebar"
@@ -15,6 +18,12 @@ import Sidebar from "@/components/Sidebar"
 export default function Dashboard() {
   const [symptoms, setSymptoms] = useState("")
   const [diagnosis, setDiagnosis] = useState("")
+
+  const [tab, setTab] = useState("home")
+
+  useEffect(() => {
+    console.log(tab)
+  }, [tab])
 
   const [email, setEmail] = useState("allenshibu@outlook.in")
   const [password, setPassword] = useState("hello123")
@@ -61,9 +70,21 @@ export default function Dashboard() {
   return (
     <div className="h-screen flex flex-col">
       <div className="w-full h-full flex flex-row">
-        <Sidebar />
+        <Sidebar tab={tab} setTab={setTab} />
         <div className="h-full w-full">
           <Navbar />
+          <div className="absolute right-0 w-72 h-64 bg-white shadow flex flex-col gap-4">
+            <p>Dr. Smith</p>
+            <p>smith@mvkshlth.com</p>
+            <button className="w-full px-4 flex flex-row justify-between">
+              Account
+              <FiSettings />
+            </button>
+            <button className="w-full px-4 flex flex-row justify-between">
+              Log Out
+              <MdLogout />
+            </button>
+          </div>
           <div className="w-full h-full flex mt-10 flex-col">
             <div className="py-8 px-8 mx-8 flex flex-col gap-4 bg-slate-100 rounded-xl">
               <p className="text-2xl">Patient Details</p>
