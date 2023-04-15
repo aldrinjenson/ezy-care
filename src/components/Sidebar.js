@@ -23,6 +23,15 @@ export default function Sidebar({ tab, setTab }) {
           <button
             className={sideBarButtonStyle}
             onClick={() => {
+              setTab("admission")
+            }}
+          >
+            <RxDashboard />
+            Admission
+          </button>
+          <button
+            className={sideBarButtonStyle}
+            onClick={() => {
               setTab("home")
             }}
           >
