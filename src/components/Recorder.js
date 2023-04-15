@@ -85,7 +85,7 @@ export default function Recorder() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
+    <div className="w-full flex flex-col justify-center items-center gap-4 rounded-t-md bg-gray-700 text-white">
       <p className="text-2xl">Recording Details</p>
       <div className="flex flex-row gap-4 text-2xl">
         <button>
