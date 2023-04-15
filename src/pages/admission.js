@@ -10,8 +10,8 @@ function Onboarding() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // add validation here
-    if (!name || !dateOfBirth || !bloodGroup || !contactNumber || !address) {
+    // if (!name || !dateOfBirth || !bloodGroup || !contactNumber || !address) {
+    if (!name) {
       toast("Please fill in all the fields");
     } else {
       toast("Patient registered successfully");
