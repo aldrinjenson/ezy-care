@@ -12,6 +12,17 @@ export default function Recorder() {
   const [audioChunks, setAudioChunks] = useState([])
   const [audio, setAudio] = useState(null)
 
+  const sendAudio = () => {
+    var fd = new FormData()
+    fd.append("audio", audio)
+
+    fetch( "/api/sendaudio", {
+      headers: { Accept: "application/json" },
+      method: "POST",
+      body: fd,
+    })
+  }
+
   const getMicrophonePermission = async () => {
     if ("MediaRecorder" in window) {
       try {
@@ -52,7 +63,7 @@ export default function Recorder() {
     mediaRecorder.current.stop()
     mediaRecorder.current.onstop = async () => {
       //creates a blob file from the audiochunks data
-      const audioBlob = new Blob(audioChunks, { type: mimeType })
+      const audioBlob = new Blob(audioChunks, { type: "audio/mp3" })
       window.localStorage.setItem("audio", audioBlob)
       //creates a playable URL from the blob file.
       const audioUrl = URL.createObjectURL(audioBlob)
@@ -101,6 +112,9 @@ export default function Recorder() {
           </div>
         ) : null}
       </div>
+      <button onClick={()=> {
+        sendAudio()
+      }}>Send Audio</button>
     </div>
   )
 }
