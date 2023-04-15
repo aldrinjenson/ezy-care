@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 import { BsMicFill, BsMicMuteFill } from "react-icons/bs"
 
-function Recorder() {
+function Recorder({setSymptoms}) {
   const [transcribedText, setTranscribedText] = useState("")
   const [textAreaText, setTextAreaText] = useState("")
   const [recording, setRecording] = useState(false)
@@ -14,8 +14,12 @@ function Recorder() {
     console.log({ transcript, transcribedText })
 
     setTextAreaText((prevText) => prevText + transcript + " ")
+    setSymptoms((prevText) => prevText + transcript + " ")
     setTranscribedText(transcript)
   }
+  useEffect(()=>{
+    setSymptoms(textAreaText)
+  },[textAreaText])
 
   const handleSpeechRecognitionEnd = () => {
     setRecording(false)
@@ -23,16 +27,13 @@ function Recorder() {
     recognition.stop()
   }
 
-  let recognition = {}
-  // if (typeof window !=='undefined'){
-  //   recognition=window.webkitSpeechRecognition()
-  // }
+  const recognition = new window.webkitSpeechRecognition()
 
   recognition.continuous = true
   recognition.interimResults = false
   recognition.lang = "en-US"
-  // recognition?.addEventListener("result", handleSpeechRecognitionResult)
-  // recognition?.addEventListener("end", handleSpeechRecognitionEnd)
+  recognition?.addEventListener("result", handleSpeechRecognitionResult)
+  recognition?.addEventListener("end", handleSpeechRecognitionEnd)
 
   const handleStartTranscription = () => {
     // Start the speech recognition and set the recording state to true
@@ -70,7 +71,7 @@ function Recorder() {
         )}
       </button>
       <p>{recording ? "Listening..." : "Stopped Listening..."}</p>
-      <p>{textAreaText}</p>
+      {/* <p>{textAreaText}</p> */}
     </div>
   )
 }
