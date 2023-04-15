@@ -1,48 +1,56 @@
 import React, { useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 
+import app, { auth } from "@/configs/firebase";
+import { Router, useRouter } from "next/router";
 
 const Login = () => {
-    const [email, setEmail] = useState("allenshibu@outlook.in");
-    const [password, setPassword] = useState("hello123");
+  const [email, setEmail] = useState("allenshibu@outlook.in");
+  const [password, setPassword] = useState("hello123");
+  const router = useRouter();
+  const signup = async (e) => {
+    e.preventDefault();
 
-    const signup = async (e) => {
-      e.preventDefault();
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
 
-      await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        });
-    };
+  const login = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user, "signed in");
+        router.push("/dashboard");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
 
-    const login = (e) => {
-      e.preventDefault();
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        });
-    };
-
-    const logout = () => {
-      signOut(auth)
-        .then(() => {
-          console.log("Signed out successfully");
-        })
-        .catch((error) => {
-          // An error happened.
-        });
-    };
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Signed out successfully");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
 
   return (
     <div className="h-[100vh] flex  flex-row justify-evenly ">
@@ -51,11 +59,10 @@ const Login = () => {
         <div className="flex flex-col mt-10">
           <label className="text-xl ">Email</label>
           <input
-        
             type="text"
             placeholder="johndoe@gmail.com"
             className="w-80 h-10 mb-5 "
-                onChange={(e) => {
+            onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
@@ -68,7 +75,10 @@ const Login = () => {
               setPassword(e.target.value);
             }}
           />
-          <button className="w-[120px] bg-blue-500 text-white py-2 px-4">
+          <button
+            onClick={login}
+            className="w-[120px] bg-blue-500 text-white py-2 px-4"
+          >
             Login
           </button>
         </div>
