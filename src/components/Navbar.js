@@ -1,13 +1,12 @@
 import { MdOutlineAccountCircle } from "react-icons/md"
+import { IoMdSettings , IoMdNotifications} from "react-icons/io"
 
 export default function Navbar() {
   return (
-    <div className="h-20 w-full px-8 flex flex-row justify-between items-center shadow-md rounded-md">
-      <p className="text-2xl font-bold tracking-wide">Mavericks Health</p>
-      <div className="flex flex-row items-center gap-2">
-        <MdOutlineAccountCircle className="text-4xl" />
-        <p>Dr. Allen</p>
-      </div>
+    <div className="h-20 w-full px-8 flex flex-row justify-end items-center gap-10 border border-gray-200">
+      <IoMdSettings className="text-4xl" />
+      <IoMdNotifications className="text-4xl" />
+      <MdOutlineAccountCircle className="text-5xl" />
     </div>
   )
 }

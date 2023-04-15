@@ -9,8 +9,14 @@ html {
 }
 
 @layer base {
+  html {
+    @apply text-gray-700;
+  }
   textarea {
     @apply resize-none p-2;
+  }
+  input {
+    @apply p-2 mx-2 border border-gray-300 bg-gray-100;
   }
 }
 
