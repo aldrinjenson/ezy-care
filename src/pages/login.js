@@ -56,8 +56,10 @@ const Login = () => {
   return (
     <div className="h-[100vh] flex  flex-row justify-evenly ">
       <div className="flex flex-col items-center  justify-center h-[100vh]">
-        <h1 className="text-4xl font-bold">Login</h1>
-        <div className="flex flex-col mt-10">
+        <div className="flex flex-col mt-10 shadow-lg p-8  rounded-lg">
+          <h1 className="text-4xl font-bold tracking-wider text-slate-500 mb-10">
+            Maverick Health
+          </h1>
           <label className="text-xl ">Email</label>
           <input
             type="text"
@@ -78,7 +80,7 @@ const Login = () => {
           />
           <button
             onClick={login}
-            className="w-[120px] bg-blue-500 text-white py-2 px-4"
+            className="w-[120px] bg-blue-500 text-white py-2 px-4 rounded-md"
           >
             Login
           </button>
