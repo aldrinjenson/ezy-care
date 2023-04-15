@@ -64,7 +64,7 @@ export default function Dashboard() {
         <Sidebar />
         <div className="h-full w-full">
           <Navbar />
-          <div className="w-full h-full flex flex-col">
+          <div className="w-full h-full flex mt-10 flex-col">
             <div className="py-8 px-8 mx-8 flex flex-col gap-4 bg-slate-100 rounded-xl">
               <p className="text-2xl">Patient Details</p>
               <div className="flex flex-col justify-center items-start gap-4 text-3xl">
