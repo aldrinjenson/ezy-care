@@ -1,13 +1,11 @@
 import { Web3Storage } from "web3.storage";
 import { useState } from "react";
-
+import { Blob } from "web3.storage";
 const apiToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEQxQzBFMTk2RjhBNzdmNjI4MjI0MmU5MzFEOWY1QjFGRjIwMjI1MEUiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzAwNDE5NTI3MzQsIm5hbWUiOiJKWkYyMSJ9.YXs9x4F23BuJdqivhodhfblh46egy87gel-ICnqKnHg";
 
 const client = new Web3Storage({ token: apiToken });
 
-window.localStorage.setItem("cid", "");
-const getcid = window.localStorage.getItem("cid");
 
 export default function Upload() {
   const [file, setFile] = useState("");
@@ -19,6 +17,20 @@ export default function Upload() {
   }
 
   //
+  const handleUpload2 = async () => {
+    const myJson = {
+      name: "John Doe",
+      age: 30,
+      email: "johndoe@example.com"
+    };
+    const jsonString = JSON.stringify(myJson);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const fileName = 'my-file.json';
+    const cid = await client.put([blob], { wrapWithDirectory: false, name: fileName });
+    console.log(`File uploaded: https://web3.storage/ipfs/${cid}`);
+  };
+
+  
 
   const handleUpload = async () => {
     console.log(document.getElementById("input").files[0]);
@@ -83,7 +95,7 @@ export default function Upload() {
         {/* 
         <label for="file">Choose file to upload</label> */}
         <input type="file" id="input" name="file" multiple />
-        <button onClick={handleUpload} className="submit-button">
+        <button onClick={handleUpload2} className="submit-button">
           Submit
         </button>
         {/* On click calls the function handleUpload*/}
