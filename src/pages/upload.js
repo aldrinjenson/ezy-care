@@ -6,12 +6,22 @@ const apiToken =
 
 const client = new Web3Storage({ token: apiToken });
 
-
 export default function Upload() {
   const [file, setFile] = useState("");
   const [displayurl, setDisplayurl] = useState("");
   const [name, setName] = useState("");
   const [response, setResponse] = useState("");
+  //   1. patient name,
+  // 2. date input with input text for date of birth
+  // 3. blood group.
+  // 4. contact number
+  // 5. address
+  const [patientName, setPatientName] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [bloodGroup, setBloodGroup] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [address, setAddress] = useState("");
+
   {
     /*function HandleUpload gets all the files inputted and then generates a CID*/
   }
@@ -19,24 +29,27 @@ export default function Upload() {
   //
   const handleUpload2 = async () => {
     const myJson = {
-      name: "John Doe",
-      age: 30,
-      email: "johndoe@example.com"
+      patientName: patientName,
+      dateOfBirth: dateOfBirth,
+      bloodGroup: bloodGroup,
+      contactNumber: contactNumber,
+      address: address,
     };
     const jsonString = JSON.stringify(myJson);
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const fileName = 'my-file.json';
-    const cid = await client.put([blob], { wrapWithDirectory: false, name: fileName });
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const fileName = name + ".json";
+    const cid = await client.put([blob], {
+      wrapWithDirectory: false,
+      name: fileName,
+    });
     console.log(`File uploaded: https://web3.storage/ipfs/${cid}`);
   };
-
-  
 
   const handleUpload = async () => {
     console.log(document.getElementById("input").files[0]);
 
     var fileInput = document.getElementById("input");
-    
+
     console.log(fileInput, fileInput.files);
 
     const rootCid = await client.put(fileInput.files, {
@@ -75,18 +88,38 @@ export default function Upload() {
                 src="http://100dayscss.com/codepen/upload.svg"
                 class="upload-icon"
               />
-
-              <input
-                type="file"
-                id="input"
-                name="file"
-                className="upload-input"
-                multiple
-              />
             </div>
           </div>
         </div>
         {/*Input the files to be uploaded */}
+        {/* 1. patient name, 2. date input with input text for date of birth 3.
+        blood group. 4. contact number 5. address */}
+        <input
+          type="text"
+          onChange={(e) => setPatientName(e.target.value)}
+          placeholder="Enter Patient Name"
+        />
+        <input
+          type="text"
+          onChange={(e) => setDateOfBirth(e.target.value)}
+          placeholder="Enter Date of Birth"
+        />
+        <input
+          type="text"
+          onChange={(e) => setBloodGroup(e.target.value)}
+          placeholder="Enter Blood Group"
+        />
+        <input
+          type="text"
+          onChange={(e) => setContactNumber(e.target.value)}
+          placeholder="Enter Contact Number"
+        />
+        <input
+          type="text"
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="Enter Address"
+        />
+
         <input
           type="text"
           onChange={(e) => setName(e.target.value)}
@@ -94,7 +127,6 @@ export default function Upload() {
         />
         {/* 
         <label for="file">Choose file to upload</label> */}
-        <input type="file" id="input" name="file" multiple />
         <button onClick={handleUpload2} className="submit-button">
           Submit
         </button>
