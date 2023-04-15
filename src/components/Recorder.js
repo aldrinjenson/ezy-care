@@ -1,4 +1,5 @@
 import { useState, useRef } from "react"
+import axios from "axios"
 
 import { FaStop, FaPlay, FaPause } from "react-icons/fa"
 
@@ -12,15 +13,25 @@ export default function Recorder() {
   const [audioChunks, setAudioChunks] = useState([])
   const [audio, setAudio] = useState(null)
 
-  const sendAudio = () => {
-    var fd = new FormData()
-    fd.append("audio", audio)
+  const sendAudio = async () => {
+    console.log(audio)
 
-    fetch( "/api/sendaudio", {
-      headers: { Accept: "application/json" },
-      method: "POST",
-      body: fd,
-    })
+    var formData = new FormData()
+    formData.append("audio", audio)
+
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        console.log(
+          `Current progress:`,
+          Math.round((event.loaded * 100) / event.total)
+        )
+      },
+    }
+
+    const response = await axios.post("/api/sendaudio", formData, config)
+
+    console.log(response)
   }
 
   const getMicrophonePermission = async () => {
@@ -112,9 +123,13 @@ export default function Recorder() {
           </div>
         ) : null}
       </div>
-      <button onClick={()=> {
-        sendAudio()
-      }}>Send Audio</button>
+      <button
+        onClick={() => {
+          sendAudio()
+        }}
+      >
+        Send Audio
+      </button>
     </div>
   )
 }
