@@ -8,16 +8,16 @@ import Logo from "../assests/doctor.png"
 import Image from "next/image"
 
 const sideBarButtonStyle =
-  "w-full py-4 rounded flex flex-row justify-start items-center hover:bg-gray-200 flex flex-row gap-4"
+  "w-full py-4 px-2 rounded flex flex-row justify-start items-center hover:bg-gray-200 flex flex-row gap-4"
 
 export default function Sidebar({ tab, setTab }) {
   return (
     <div className="w-96 h-full flex flex-col justify-start items-start gap-4 text-2xl">
-      <div className="w-full h-[89px] flex justify-center items-center gap-6 border-t border-b border-gray-200">
+      <div className="w-full h-[89px] flex justify-center items-center gap-6 border-t border-b border-gray-400">
         <Image src={Logo} alt="Logo" width={40} height={40} />
         <p>Mavericks Health</p>
       </div>
-      <div className="w-full h-full flex flex-col border-r border-gray-200">
+      <div className="w-full h-full flex flex-col border-r border-gray-400">
         <div className="w-full px-4">
           <p className="text-sm">Main</p>
           <button

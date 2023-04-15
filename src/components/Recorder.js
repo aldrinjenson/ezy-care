@@ -1,135 +1,78 @@
-import { useState, useRef, useEffect } from "react"
-import axios from "axios"
+import { useState, useEffect } from "react"
 
-import { FaStop, FaPlay, FaPause } from "react-icons/fa"
+import { BsMicFill, BsMicMuteFill } from "react-icons/bs"
 
-const mimeType = "audio/webm"
+function Recorder() {
+  const [transcribedText, setTranscribedText] = useState("")
+  const [textAreaText, setTextAreaText] = useState("")
+  const [recording, setRecording] = useState(false)
 
-export default function Recorder() {
-  const [permission, setPermission] = useState(false)
-  const mediaRecorder = useRef(null)
-  const [recordingStatus, setRecordingStatus] = useState("inactive")
-  const [stream, setStream] = useState(null)
-  const [audioChunks, setAudioChunks] = useState([])
-  const [audio, setAudio] = useState(null)
+  const handleSpeechRecognitionResult = (event) => {
+    // Extract the transcribed text from the event object
+    const { transcript } = event.results[0][0]
+    recognition.stop()
+    console.log({ transcript, transcribedText })
 
-  const sendAudio = async () => {
-    console.log(audio)
-
-    var formData = new FormData()
-    formData.append("audio", audio)
-
-    const config = {
-      headers: { "content-type": "multipart/form-data" },
-      onUploadProgress: (event) => {
-        console.log(
-          `Current progress:`,
-          Math.round((event.loaded * 100) / event.total)
-        )
-      },
-    }
-
-    const response = await axios.post("/api/sendaudio", formData, config)
-
-    console.log(response)
+    setTextAreaText((prevText) => prevText + transcript + " ")
+    setTranscribedText(transcript)
   }
 
-  const getMicrophonePermission = async () => {
-    if ("MediaRecorder" in window) {
-      try {
-        const streamData = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-          video: false,
-        })
-        setPermission(true)
-        setStream(streamData)
-      } catch (err) {
-        alert(err.message)
+  const handleSpeechRecognitionEnd = () => {
+    setRecording(false)
+    console.log("ended")
+    recognition.stop()
+  }
+
+  let recognition = {}
+  // if (typeof window !=='undefined'){
+  //   recognition=window.webkitSpeechRecognition()
+  // }
+
+  recognition.continuous = true
+  recognition.interimResults = false
+  recognition.lang = "en-US"
+  // recognition?.addEventListener("result", handleSpeechRecognitionResult)
+  // recognition?.addEventListener("end", handleSpeechRecognitionEnd)
+
+  const handleStartTranscription = () => {
+    // Start the speech recognition and set the recording state to true
+    setRecording(true)
+    recognition.start()
+  }
+
+  const handleStopTranscription = () => {
+    console.log("stopping")
+    recognition.stop()
+  }
+
+  // Add event listener for keydown event on the document object
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 32) {
+        handleStartTranscription()
       }
-    } else {
-      alert("The MediaRecorder API is not supported in your browser.")
     }
-  }
-
-  const startRecording = async () => {
-    setRecordingStatus("recording")
-    //create new Media recorder instance using the stream
-    const media = new MediaRecorder(stream, { type: mimeType })
-    //set the MediaRecorder instance to the mediaRecorder ref
-    mediaRecorder.current = media
-    //invokes the start method to start the recording process
-    mediaRecorder.current.start()
-    let localAudioChunks = []
-    mediaRecorder.current.ondataavailable = (event) => {
-      if (typeof event.data === "undefined") return
-      if (event.data.size === 0) return
-      localAudioChunks.push(event.data)
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown)
     }
-    setAudioChunks(localAudioChunks)
-  }
-
-  const stopRecording = async () => {
-    setRecordingStatus("inactive")
-    //stops the recording instance
-    mediaRecorder.current.stop()
-    mediaRecorder.current.onstop = async () => {
-      //creates a blob file from the audiochunks data
-      const audioBlob = new Blob(audioChunks, { type: "audio/mp3" })
-      window.localStorage.setItem("audio", audioBlob)
-      //creates a playable URL from the blob file.
-      const audioUrl = URL.createObjectURL(audioBlob)
-      setAudio(audioUrl)
-      console.log(audioUrl)
-      setAudioChunks([])
-    }
-  }
+  }, [])
 
   return (
-    <div className="w-full flex flex-col justify-center items-center gap-4 rounded-t-md bg-gray-700 text-white">
-      <p className="text-2xl">Recording Details</p>
-      <div className="flex flex-row gap-4 text-2xl">
-        <button>
-          <FaPlay />
-        </button>
-        <button>
-          <FaPause />
-        </button>
-        <button>
-          <FaStop />
-        </button>
-      </div>
-      <div className="audio-controls">
-        {!permission ? (
-          <button onClick={getMicrophonePermission} type="button">
-            Get Microphone
-          </button>
-        ) : null}
-        {permission && recordingStatus === "inactive" ? (
-          <button onClick={startRecording} type="button">
-            Start Recording
-          </button>
-        ) : null}
-        {recordingStatus === "recording" ? (
-          <button onClick={stopRecording} type="button">
-            Stop Recording
-          </button>
-        ) : null}
-        {audio ? (
-          <div className="audio-container">
-            <audio src={audio} controls></audio>
-            <a download href={audio}>
-              Download Recording
-            </a>
-          </div>
-        ) : null}
-      </div>
+    <div className="h-32 w-full flex flex-col justify-center items-center">
       <button
-        onClick={() => {
-          sendAudio()
-        }}
+        onClick={recording ? handleStopTranscription : handleStartTranscription}
       >
-        Send Audio
+        {recording ? (
+          <BsMicFill className="text-4xl" />
+        ) : (
+          <BsMicMuteFill className="text-4xl" />
+        )}
       </button>
+      <p>{recording ? "Listening..." : "Stopped Listening..."}</p>
+      <p>{textAreaText}</p>
     </div>
   )
 }
+
+export default Recorder
