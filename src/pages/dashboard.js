@@ -1,8 +1,7 @@
 import { useState } from "react"
 
-import { FaStop, FaPlay, FaPause } from "react-icons/fa"
-
 import Navbar from "@/components/Navbar"
+import Recorder from "@/components/Recorder"
 
 export default function Dashboard() {
   const [symptoms, setSymptoms] = useState("")
@@ -45,20 +44,7 @@ export default function Dashboard() {
             ></textarea>
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center gap-4">
-          <p className="text-2xl">Recording Details</p>
-          <div className="flex flex-row gap-4 text-2xl">
-            <button>
-              <FaPlay />
-            </button>
-            <button>
-              <FaPause />
-            </button>
-            <button>
-              <FaStop />
-            </button>
-          </div>
-        </div>
+        <Recorder />
       </div>
     </div>
   )
