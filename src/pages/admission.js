@@ -1,4 +1,5 @@
-import { useState } from "react";
+import {  useState } from "react";
+import {toast} from 'react-toastify'
 
 function Onboarding() {
   const [name, setName] = useState("");
@@ -11,9 +12,9 @@ function Onboarding() {
     e.preventDefault();
     // add validation here
     if (!name || !dateOfBirth || !bloodGroup || !contactNumber || !address) {
-      alert("Please fill in all the fields");
+      toast("Please fill in all the fields");
     } else {
-      alert("Patient registered successfully");
+      toast("Patient registered successfully");
     }
   };
 
