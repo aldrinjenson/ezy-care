@@ -15,7 +15,7 @@ export default function Sidebar({ tab, setTab }) {
     <div className="w-96 h-full flex flex-col justify-start items-start gap-4 text-2xl">
       <div className="w-full h-[89px] flex justify-center items-center gap-6 border-t border-b border-gray-400">
         <Image src={Logo} alt="Logo" width={40} height={40} />
-        <p>Mavericks Health</p>
+        <p>EzyCare</p>
       </div>
       <div className="w-full h-full flex flex-col border-r border-gray-400">
         <div className="w-full px-4">
