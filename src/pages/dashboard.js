@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 
 const Recorder = dynamic(() => import("@/components/Recorder"), {
   ssr: false,
+<<<<<<< Updated upstream
 });
 import Sidebar from "@/components/Sidebar";
 import { BsMicFill } from "react-icons/bs";
@@ -24,6 +25,40 @@ export default function Dashboard() {
   const [accountActionsOpen, setAccountActionsOpen] = useState(false);
   const [patientId, setPatientId] = useState(null);
   const [shouldShowModal, setShouldShowModal] = useState(false);
+=======
+})
+import Sidebar from "@/components/Sidebar"
+import { BsMicFill } from "react-icons/bs"
+import { toast } from "react-toastify"
+import Scanner from "@/components/Scanner"
+import { Blob } from "web3.storage";
+
+export default function Dashboard() {
+    const handleUpload2 = async () => {
+      const myJson = {
+        patientName: patientName,
+        dateOfBirth: dateOfBirth,
+        bloodGroup: bloodGroup,
+        contactNumber: contactNumber,
+        address: address,
+      };
+      const jsonString = JSON.stringify(myJson);
+      const blob = new Blob([jsonString], { type: "application/pdf" });
+      const fileName = name + ".json";
+      const cid = await client.put([blob], {
+        wrapWithDirectory: false,
+        name: fileName,
+      });
+      console.log(`File uploaded: https://web3.storage/ipfs/${cid}`);
+    };
+
+  const [symptoms, setSymptoms] = useState("")
+  const [diagnosis, setDiagnosis] = useState("")
+  const [tab, setTab] = useState("home")
+  const [accountActionsOpen, setAccountActionsOpen] = useState(false)
+  const [patientId, setPatientId] = useState(null)
+  const [shouldShowModal, setShouldShowModal] = useState(false)
+>>>>>>> Stashed changes
 
   const logout = () => {
     signOut(auth)

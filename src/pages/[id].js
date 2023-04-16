@@ -77,6 +77,18 @@ const getPatients = () => {
           </tr>
         </tbody>
       </table>
+      <>
+        {patient.cid?.map((item) => {
+          return (
+            <div className="flex flex-col justify-center items-center gap-16 shadow">
+              <div className="bg-blue-400 text-white">
+                <button><a href={item}>Open File</a></button>
+
+              </div>
+            </div>
+          );
+        })}
+      </>
 
       {/* <p>{patient.PatientName}</p>
       <p>{patient.dateOfBirth}</p>
