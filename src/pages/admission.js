@@ -52,41 +52,13 @@ function Onboarding() {
     });
     console.log(`File uploaded: https://web3.storage/ipfs/${cid}`);
   };
-  const usersRef = collection(db, "patients");
 
-  const uploadFireBase = async () => {
-    addDoc(usersRef, {
-      PatientName: name,
-      dateOfBirth: dateOfBirth,
-      bloodGroup: bloodGroup,
-      contactNumber: contactNumber,
-      address: address,
-      email:email,
-    });
-    //sleep(1000);
-  };
-  const handleUpload2 = async () => {
-    const myJson = {
-      patientName: patientName,
-      dateOfBirth: dateOfBirth,
-      bloodGroup: bloodGroup,
-      contactNumber: contactNumber,
-      address: address,
-    };
-    const jsonString = JSON.stringify(myJson);
-    const blob = new Blob([jsonString], { type: "application/json" });
-    const fileName = name + ".json";
-    const cid = await client.put([blob], {
-      wrapWithDirectory: false,
-      name: fileName,
-    });
-    console.log(`File uploaded: https://web3.storage/ipfs/${cid}`);
-  };
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#FBFAF5]">
       <div
-        className="flex flex-col  rounded-lg shadow-md p-10 bg-[#FBFAF5]"
+        className="flex flex-col  rounded-lg  shadow-md p-10 bg-[#FBFAF5]"
         // onSubmit={uploadFireBase}
       >
         <h1 className="text-3xl font-semibold mb-5">Patient Admission</h1>

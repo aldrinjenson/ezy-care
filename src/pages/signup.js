@@ -61,9 +61,11 @@ const SignUp = () => {
   return (
     <div className="h-[100vh] flex  flex-row justify-evenly ">
       <div className="flex flex-col items-center  justify-center h-[100vh]">
-        <h1 className="text-4xl font-bold">SignUp</h1>
+        <h1 className="text-4xl font-bold">Signup</h1>
         <div className="flex flex-col mt-10">
-          <label className="text-xl ">Email</label>
+          <label className="text-[0.8rem] font-semibold uppercase ">
+            Email
+          </label>
           <input
             type="text"
             placeholder="johndoe@gmail.com"
@@ -72,7 +74,9 @@ const SignUp = () => {
               setEmail(e.target.value);
             }}
           />
-          <label className="text-xl ">Password</label>
+          <label className="text-[0.8rem] font-semibold uppercase ">
+            Password
+          </label>
           <input
             type="password"
             placeholder="********"
@@ -81,7 +85,9 @@ const SignUp = () => {
               setPassword(e.target.value);
             }}
           />
-          <label className="text-xl ">Confirm Password</label>
+          <label className="text-[0.8rem] font-semibold uppercase  ">
+            Confirm Password
+          </label>
           <input
             type="password"
             placeholder="********"
@@ -92,12 +98,15 @@ const SignUp = () => {
           />
           <button
             onClick={signup}
-            className="w-[120px] bg-blue-500 text-white py-2 px-4"
+            className="w-[120px] bg-blue-500 text-white py-2 px-4 mb-2"
           >
             Signup
           </button>
-          <p>Already have an account? Login 
-            <Link href="/login" className="my-3 py-3 underline"> here</Link> 
+          <p>
+            Already have an account? Login&nbsp;
+            <Link href="/login" className="my-3 text-blue-500 py-3 underline">
+              here
+            </Link>
           </p>
         </div>
       </div>
