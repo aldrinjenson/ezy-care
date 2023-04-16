@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { db } from "@/configs/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs,query,where } from "firebase/firestore";
 
 const getPatients = () => {
+    const patientRef=collection(db,"patients");
+    const q=query(patientRef,where("Patient","==","Ra"));
   const getPatients = async () => {
     const querySnapshot = await getDocs(collection(db, "patients"));
     querySnapshot.forEach((doc) => {
