@@ -35,6 +35,8 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
+    // print()
+
     if (patientId) {
       console.log({ patientId })
       // fetch details from firebase and prefill name, age etc dynamically
