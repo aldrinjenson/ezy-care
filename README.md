@@ -73,3 +73,12 @@ The web app for patient consultations solves the problem of inefficient and time
 - https://www.loom.com/share/97c05fea5ca647a0987f55a900dc7141
 - https://mavericks-health-pwemh.ondigitalocean.app/
 
+
+## Future Plans
+- Improve the UI/UX design of the web app for a better user experience
+- Improve the AI diagnosis feature by incorporating machine learning models to provide more accurate suggestions for diagnosis
+- Implement SMS notification for patient appointments and follow-up reminders
+- Partner with healthcare providers and hospitals to expand the user base and offer more comprehensive services
+- Develop a virtual assistant feature to automate routine tasks such as appointment scheduling and prescription refills
+- Expand to international markets and offer multilingual support for non-English speaking patients and doctors
+- Develop a blockchain-based health record management system to ensure secure and private storage of patient data
