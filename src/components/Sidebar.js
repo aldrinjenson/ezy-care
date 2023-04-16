@@ -4,7 +4,7 @@ import { TbWriting } from "react-icons/tb"
 import { BiHelpCircle } from "react-icons/bi"
 import { FiSettings } from "react-icons/fi"
 
-import Logo from "../assests/doctor.png"
+import Logo from "../assets/doctor.png"
 import Image from "next/image"
 
 const sideBarButtonStyle =

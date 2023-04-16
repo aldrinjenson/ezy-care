@@ -8,6 +8,7 @@ function Onboarding() {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
 
@@ -19,6 +20,37 @@ function Onboarding() {
     } else {
       toast("Patient registered successfully");
     }
+    
+  };
+  const usersRef = collection(db, "patients");
+
+  const uploadFireBase = async () => {
+    addDoc(usersRef, {
+      PatientName: name,
+      dateOfBirth: dateOfBirth,
+      bloodGroup: bloodGroup,
+      contactNumber: contactNumber,
+      address: address,
+      email:email,
+    });
+    //sleep(1000);
+  };
+  const handleUpload2 = async () => {
+    const myJson = {
+      patientName: patientName,
+      dateOfBirth: dateOfBirth,
+      bloodGroup: bloodGroup,
+      contactNumber: contactNumber,
+      address: address,
+    };
+    const jsonString = JSON.stringify(myJson);
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const fileName = name + ".json";
+    const cid = await client.put([blob], {
+      wrapWithDirectory: false,
+      name: fileName,
+    });
+    console.log(`File uploaded: https://web3.storage/ipfs/${cid}`);
   };
   const usersRef = collection(db, "patients");
 
@@ -107,8 +139,24 @@ function Onboarding() {
         </div>
         <div className="flex flex-col mb-4">
           <label
-            htmlFor="contactNumber"
-            className="mb-2 font-semibold text-gray-700"
+            htmlFor='email'
+            className='mb-2 font-semibold text-gray-700'
+          >
+            Email
+          </label>
+          <input
+            id='email'
+            name='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className='border rounded-lg py-2 px-3 text-gray-700'
+            placeholder='Enter email'
+          />
+        </div>
+        <div className='flex flex-col mb-4'>
+          <label
+            htmlFor='contactNumber'
+            className='mb-2 font-semibold text-gray-700'
           >
             Contact Number
           </label>
