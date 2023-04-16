@@ -11,21 +11,6 @@ import dynamic from "next/dynamic";
 
 const Recorder = dynamic(() => import("@/components/Recorder"), {
   ssr: false,
-<<<<<<< Updated upstream
-});
-import Sidebar from "@/components/Sidebar";
-import { BsMicFill } from "react-icons/bs";
-import { toast } from "react-toastify";
-import Scanner from "@/components/Scanner";
-
-export default function Dashboard() {
-  const [symptoms, setSymptoms] = useState("");
-  const [diagnosis, setDiagnosis] = useState("");
-  const [tab, setTab] = useState("home");
-  const [accountActionsOpen, setAccountActionsOpen] = useState(false);
-  const [patientId, setPatientId] = useState(null);
-  const [shouldShowModal, setShouldShowModal] = useState(false);
-=======
 })
 import Sidebar from "@/components/Sidebar"
 import { BsMicFill } from "react-icons/bs"
@@ -58,7 +43,6 @@ export default function Dashboard() {
   const [accountActionsOpen, setAccountActionsOpen] = useState(false)
   const [patientId, setPatientId] = useState(null)
   const [shouldShowModal, setShouldShowModal] = useState(false)
->>>>>>> Stashed changes
 
   const logout = () => {
     signOut(auth)
