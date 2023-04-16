@@ -25,6 +25,7 @@ const SignUp = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+        router.push("/dashboard");
       })
       .catch((error) => {
         const errorCode = error.code;
