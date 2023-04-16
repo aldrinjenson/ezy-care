@@ -4,17 +4,14 @@ import { useEffect } from "react";
 import {
   addDoc,
   collection,
-  doc,
-  setDoc,
   query,
-  where,
   getDocs,
 } from "firebase/firestore";
 import { db } from "@/configs/firebase";
 import TakePhoto from "@/components/takePhoto";
 
 function Onboarding() {
-  const usersRef = collection(db, "patients");
+  const EzyCare = collection(db, "patients");
   const [name, setName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
@@ -22,7 +19,7 @@ function Onboarding() {
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [count, setCount] = useState(0);
-  const q = query(usersRef);
+  const q = query(EzyCare);
   const getPatients = async () => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -40,7 +37,7 @@ function Onboarding() {
   const [patientImageUrl, setPatientImageurl] = useState(false);
 
   const uploadFireBase = async () => {
-    addDoc(usersRef, {
+    addDoc(EzyCare, {
       TimeStamp: new Date().toLocaleString(),
       pid: count + 1,
       PatientName: name,
