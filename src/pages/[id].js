@@ -46,35 +46,35 @@ const getPatients = () => {
     <div className="text-black flex flex-col justify-center items-center gap-16 shadow">
       <h1>Patients</h1>
       <img src={patient.img} width={100} height={100} />
-      <table class="text-xs my-3">
+      <table className="text-xs my-3">
         <tbody>
           <tr>
-            <td class="px-2 py-2 text-gray-500  text-xl font-semibold">Name</td>
-            <td class="px-2 py-2 text-xl ">{patient.PatientName}</td>
+            <td className="px-2 py-2 text-gray-500  text-xl font-semibold">Name</td>
+            <td className="px-2 py-2 text-xl ">{patient.PatientName}</td>
           </tr>
           <tr>
-            <td class="px-2 py-2 text-gray-500  text-xl font-semibold">
+            <td className="px-2 py-2 text-gray-500  text-xl font-semibold">
               Date of Birth
             </td>
-            <td class="px-2 py-2 text-xl ">{patient.dateOfBirth}</td>
+            <td className="px-2 py-2 text-xl ">{patient.dateOfBirth}</td>
           </tr>
           <tr>
-            <td class="px-2 py-2 text-gray-500  text-xl font-semibold">
+            <td className="px-2 py-2 text-gray-500  text-xl font-semibold">
               Address
             </td>
-            <td class="px-2 py-2 text-xl ">{patient.address}</td>
+            <td className="px-2 py-2 text-xl ">{patient.address}</td>
           </tr>
           <tr>
-            <td class="px-2 py-2 text-gray-500  text-xl font-semibold">
+            <td className="px-2 py-2 text-gray-500  text-xl font-semibold">
               Phone
             </td>
-            <td class="px-2 py-2 text-xl ">{patient.contactNumber}</td>
+            <td className="px-2 py-2 text-xl ">{patient.contactNumber}</td>
           </tr>
           <tr>
-            <td class="px-2 py-2 text-gray-500  text-xl font-semibold">
+            <td className="px-2 py-2 text-gray-500  text-xl font-semibold">
               Email
             </td>
-            <td class="px-2 py-2 text-xl ">{patient.email}</td>
+            <td className="px-2 py-2 text-xl ">{patient.email}</td>
           </tr>
         </tbody>
       </table>

@@ -13,5 +13,6 @@ export default async function generatePdf(req, res) {
     res.setHeader("Content-Disposition", `attachment; filename="${Math.random()}.pdf"`);
     res.setHeader("Content-Type", "application/pdf");
     res.send(Buffer.from(pdfBuffer, "base64"));
-  });
+    
+  });
 }

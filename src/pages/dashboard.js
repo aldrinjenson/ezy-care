@@ -19,16 +19,54 @@ import { BsMicFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import Scanner from "@/components/Scanner";
 import { Blob } from "web3.storage";
+import { Web3Storage } from "web3.storage";
 
+
+const apiToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEQxQzBFMTk2RjhBNzdmNjI4MjI0MmU5MzFEOWY1QjFGRjIwMjI1MEUiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzAwNDE5NTI3MzQsIm5hbWUiOiJKWkYyMSJ9.YXs9x4F23BuJdqivhodhfblh46egy87gel-ICnqKnHg";
+
+const client = new Web3Storage({ token: apiToken });
 export default function Dashboard() {
-  const [symptoms, setSymptoms] = useState("");
-  const [diagnosis, setDiagnosis] = useState("");
-  const [tab, setTab] = useState("home");
-  const [accountActionsOpen, setAccountActionsOpen] = useState(false);
-  const [patientId, setPatientId] = useState(43);
-  const [shouldShowModal, setShouldShowModal] = useState(false);
+
   const [patient, setPatient] = useState({});
   const router = useRouter();
+  const [patientName,setPatientName]=useState("John Doe")
+  const [dateOfBirth,setDateOfBirth]=useState("01/01/2000")
+  const [bloodGroup,setBloodGroup]=useState("A+")
+  const [contactNumber,setContactNumber]=useState(9847031225)
+  const [address,setAddress]=useState("Mamatha Nagar Kochi");
+  const [prescription,setPrescription]=useState("")
+  const [link,setLink]=useState("")
+ 
+    const handleUpload2 = async () => {
+      const myJson = {
+        patientName: patientName,
+        dateOfBirth: dateOfBirth,
+        bloodGroup: bloodGroup,
+        contactNumber: contactNumber,
+        address: address,
+        symptoms: symptoms,
+        diagnosis:diagnosis,
+        prescription:prescription
+      };
+      const jsonString = JSON.stringify(myJson);
+      const blob = new Blob([jsonString], { type: "application/pdf" });
+      const fileName = name + ".json";
+      const cid = await client.put([blob], {
+        wrapWithDirectory: false,
+        name: fileName,
+      });
+      console.log(`File uploaded: https://${cid}.ipfs.w3s.link`);
+      setLink(`https://${cid}.ipfs.w3s.link`)
+    };
+
+  const [symptoms, setSymptoms] = useState("")
+  const [diagnosis, setDiagnosis] = useState("")
+  const [tab, setTab] = useState("home")
+  const [accountActionsOpen, setAccountActionsOpen] = useState(false)
+  const [patientId, setPatientId] = useState(null)
+  const [shouldShowModal, setShouldShowModal] = useState(false)
+
 
   const logout = () => {
     signOut(auth)
@@ -212,8 +250,9 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <button className='btn' onClick={handleGeneratePdf}>
-            Generate Report
+
+          <button className='btn' onClick={handleUpload2}>
+           <a href={link} target="blank_"> {link ? link: "Generate Report"}</a>
           </button>
         </div>
       </div>
