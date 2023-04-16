@@ -28,6 +28,8 @@ The web app for patient consultations solves the problem of inefficient and time
 
 ## Links
 - https://mavericks-health-pwemh.ondigitalocean.app/  
+- https://github.com/alapanoski/mavericks-health
+- https://github.com/alapanoski/mavericks-health-flask-backend
 
 ## Getting Started
 
