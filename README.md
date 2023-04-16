@@ -1,5 +1,18 @@
-# EzyCare
+# EzyCare - AI Diagnosing + Easy Medical Consultancy management
+
 The easy and simple way to manage your clinic and patients.
+
+## Problems based in current industry
+
+- Visiting a doctor is time consuming. Often taking up half to a whole day
+- Patients often will have to wait in long queues to see doctors because it takes too much time per patient
+- Doctors resort to writing down symptoms and diagnosis in papers which is too slow
+- The chart of case history of patients could get lost or decayed over time
+- Really difficult by doctors to referrence past cases
+- There has been cases when a doctor made wrong  diagnosis and put patient's lives at risk
+
+
+We solve all these problems using our solution
 
 ## The Problem It Solves
 The web app for patient consultations solves the problem of inefficient and time-consuming patient consultations by providing a range of features to streamline the process. The app helps physicians to save time and make the consulting process with patients easy, while also ensuring efficiency, security, and privacy. It offers a range of tools, including the 
@@ -24,6 +37,19 @@ The web app for patient consultations solves the problem of inefficient and time
 - Firebase
 - NodeMailer
 - Flask
+
+
+## Target Audience
+- Doctors
+- Personal Clinic owners
+
+## Revenue Model
+
+- SAAS - Subscription based offerrings
+- Add-On feature for voice-to-text for existing EHR management softwares
+- Maintenance costs(lifelong)
+- Pro Plans for even more features like complete EHR system with multiple doctors support
+- Admin views for small to large medical businesses
 
 
 ## Links
