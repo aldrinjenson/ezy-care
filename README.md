@@ -81,4 +81,4 @@ The web app for patient consultations solves the problem of inefficient and time
 - Partner with healthcare providers and hospitals to expand the user base and offer more comprehensive services
 - Develop a virtual assistant feature to automate routine tasks such as appointment scheduling and prescription refills
 - Expand to international markets and offer multilingual support for non-English speaking patients and doctors
-- Develop a blockchain-based health record management system to ensure secure and private storage of patient data
+- Tie up with startups doing drug delivery. Have prescriptions be managed and delivered within the system as well.
