@@ -13,20 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("allenshibu@outlook.in")
   const [password, setPassword] = useState("hello123")
   const router = useRouter()
-  const signup = async (e) => {
-    e.preventDefault()
-
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user
-        console.log(user)
-      })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log(errorCode, errorMessage)
-      })
-  }
+ 
 
   const login = (e) => {
     e.preventDefault()
@@ -40,16 +27,6 @@ const Login = () => {
         const errorCode = error.code
         const errorMessage = error.message
         console.log(errorCode, errorMessage)
-      })
-  }
-
-  const logout = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("Signed out successfully")
-      })
-      .catch((error) => {
-        // An error happened.
       })
   }
 

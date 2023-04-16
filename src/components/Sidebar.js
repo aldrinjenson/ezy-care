@@ -3,6 +3,7 @@ import { BsFillPeopleFill } from "react-icons/bs"
 import { TbWriting } from "react-icons/tb"
 import { BiHelpCircle } from "react-icons/bi"
 import { FiSettings } from "react-icons/fi"
+import { useRouter } from "next/router";
 
 import Logo from "../assets/doctor.png"
 import Image from "next/image"
@@ -11,6 +12,7 @@ const sideBarButtonStyle =
   "w-full py-4 px-2 rounded flex flex-row justify-start items-center hover:bg-gray-200 flex flex-row gap-4"
 
 export default function Sidebar({ tab, setTab }) {
+  const router=useRouter()
   return (
     <div className="w-96 h-full flex flex-col justify-start items-start gap-4 text-2xl">
       <div className="w-full h-[89px] flex justify-center items-center gap-6 border-t border-b border-gray-200">
@@ -23,7 +25,7 @@ export default function Sidebar({ tab, setTab }) {
           <button
             className={sideBarButtonStyle}
             onClick={() => {
-              setTab("admission")
+              router.push("/admission")
             }}
           >
             <RxDashboard />
@@ -41,11 +43,11 @@ export default function Sidebar({ tab, setTab }) {
           <button
             className={sideBarButtonStyle}
             onClick={() => {
-              setTab("patients")
+              router.push("/cases")
             }}
           >
             <BsFillPeopleFill />
-            Patients
+            Cases
           </button>
           <button
             className={sideBarButtonStyle}

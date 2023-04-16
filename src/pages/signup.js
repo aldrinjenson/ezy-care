@@ -48,17 +48,6 @@ const SignUp = () => {
         console.log(errorCode, errorMessage)
       })
   }
-
-  const logout = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("Signed out successfully")
-      })
-      .catch((error) => {
-        // An error happened.
-      })
-  }
-
   return (
     <div className="h-[100vh] flex  flex-row justify-evenly ">
       <div className="flex flex-col items-center  justify-center h-[100vh]">

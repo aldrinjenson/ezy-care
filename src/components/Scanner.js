@@ -43,7 +43,7 @@ function Scanner({ onClose, setPatientId }) {
           </button> */}
           <button
             className='px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-white'
-            onClick={() => result?.length && setPatientId(result)}
+            onClick={() => setPatientId(result)}
           >
             Continue
           </button>

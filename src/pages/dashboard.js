@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { db } from "@/configs/firebase";
@@ -12,11 +13,11 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 
 const Recorder = dynamic(() => import("@/components/Recorder"), {
   ssr: false,
-})
-import Sidebar from "@/components/Sidebar"
-import { BsMicFill } from "react-icons/bs"
-import { toast } from "react-toastify"
-import Scanner from "@/components/Scanner"
+});
+import Sidebar from "@/components/Sidebar";
+import { BsMicFill } from "react-icons/bs";
+import { toast } from "react-toastify";
+import Scanner from "@/components/Scanner";
 import { Blob } from "web3.storage";
 
 export default function Dashboard() {
@@ -27,10 +28,12 @@ export default function Dashboard() {
   const [patientId, setPatientId] = useState(43);
   const [shouldShowModal, setShouldShowModal] = useState(false);
   const [patient, setPatient] = useState({});
+  const router = useRouter();
 
   const logout = () => {
     signOut(auth)
       .then(() => {
+        router.push("/");
         toast("Signed out successfully");
       })
       .catch((error) => {
@@ -38,8 +41,10 @@ export default function Dashboard() {
       });
   };
   const getPatientDetails = async (patientId) => {
+    console.log(patientId);
+
     const patientRef = collection(db, "patients");
-    const q = query(patientRef, where("pid", "==", parseInt(patientId)));
+    const q = query(patientRef, where("pid", "==", patientId));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       console.log(
@@ -58,12 +63,12 @@ export default function Dashboard() {
       });
     });
   };
-   console.log({patient});
-   
+  console.log(patient);
 
   useEffect(() => {
-
     if (patientId) {
+      console.log("running useefect with pid=", patientId);
+
       console.log({ patientId });
       // fetch details from firebase and prefill name, age etc dynamically
       getPatientDetails(patientId);
@@ -94,8 +99,7 @@ export default function Dashboard() {
       });
   };
 
-  console.log({patientId});
-  
+  console.log({ patientId });
 
   if (shouldShowModal) {
     return (
@@ -106,7 +110,7 @@ export default function Dashboard() {
   }
 
   const startDiagnosis = async () => {
-    setDiagnosis("Please wait...")
+    setDiagnosis("Please wait...");
     fetch("http://localhost:3000/api/getadvice", {
       method: "POST",
       headers: {
@@ -116,10 +120,10 @@ export default function Dashboard() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
-        setDiagnosis(data.advice)
-      })
-  }
+        console.log(data);
+        setDiagnosis(data.advice);
+      });
+  };
 
   return (
     <div className='h-screen w-full flex flex-row'>
@@ -146,9 +150,9 @@ export default function Dashboard() {
             </button>
           </div>
         )}
-        <div className="w-full flex flex-col gap-4">
-          <div className="h-64 px-8 py-4 mx-8  my-8 flex flex-col gap-2 bg-slate-100 rounded-xl">
-            <p className="text-2xl font-semibold tracking-wide">
+        <div className='w-full flex flex-col gap-4'>
+          <div className='h-64 px-8 py-4 mx-8  my-8 flex flex-col gap-2 bg-slate-100 rounded-xl'>
+            <p className='text-2xl font-semibold tracking-wide'>
               Patient Details
             </p>
 
@@ -188,7 +192,7 @@ export default function Dashboard() {
                 }}
                 placeholder='Please start recording to generate symptoms'
               ></textarea>
-              <button className="btn" onClick={startDiagnosis}>
+              <button className='btn' onClick={startDiagnosis}>
                 Start diagnosis
               </button>
             </div>
@@ -198,7 +202,7 @@ export default function Dashboard() {
                 className='h-full w-full'
                 value={diagnosis}
                 onChange={(e) => setDiagnosis(e.target.value)}
-                placeholder="No diagnosis yet..."
+                placeholder='No diagnosis yet...'
               ></textarea>
             </div>
           </div>
