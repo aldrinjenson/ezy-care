@@ -6,14 +6,17 @@ import {
   signOut,
 } from "firebase/auth"
 
+
+import Image from "next/image"
 import app, { auth } from "@/configs/firebase"
 import { Router, useRouter } from "next/router"
+
+import logo from '../assets/logo.png'
 
 const Login = () => {
   const [email, setEmail] = useState("allenshibu@outlook.in")
   const [password, setPassword] = useState("hello123")
   const router = useRouter()
- 
 
   const login = (e) => {
     e.preventDefault()
@@ -34,9 +37,12 @@ const Login = () => {
     <div className="h-[100vh] flex  flex-row justify-evenly ">
       <div className="flex flex-col items-center  justify-center h-[100vh]">
         <div className="flex flex-col gap-4 mt-10 shadow-lg p-8  rounded-lg">
-          <h1 className="text-4xl font-bold tracking-wider text-slate-500 mb-10">
-            Maverick Health
-          </h1>
+          <div className="flex flex-row justify-center items-center gap-4">
+            <Image src={logo} alt="Logo" width={40} height={40} />
+            <h1 className="text-4xl font-bold tracking-wider text-slate-500">
+              EzyCare
+            </h1>
+          </div>
           <h3 className="text-3xl font-bold text-center">Login</h3>
           <label className="text-xl ">Email</label>
           <input
