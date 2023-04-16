@@ -1,4 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EzyCare
+The easy and simple way to manage your clinic and patients.
+
+## The Problem It Solves
+The web app for patient consultations solves the problem of inefficient and time-consuming patient consultations by providing a range of features to streamline the process. The app helps physicians to save time and make the consulting process with patients easy, while also ensuring efficiency, security, and privacy. It offers a range of tools, including the 
+- ability to manage registrations using QR codes and images, 
+- store sensitive records in a decentralized blockchain , 
+- generate reports of sessions, and easily search through past cases. 
+- The app also incorporates AI technology to provide diagnosis suggestions and offers a speech-to-text feature that allows physicians to quickly input symptoms and receive AI-generated diagnoses. By addressing these challenges and providing a comprehensive suite of tools, the app enables physicians to deliver better, more effective patient consultations in less time.
+
+## Challenges We Ran Into
+- Speech recongition
+- incorporating filecoin
+
+
+## Technologies We Used
+- IPFS
+- FileCoin
+- DigitalOcean
+- TailwindCSS
+- Replit
+- Web3Storage
+- NextJS
+- Firebase
+- NodeMailer
+- Flask
+
+
+## Links
+- https://mavericks-health-pwemh.ondigitalocean.app/  
 
 ## Getting Started
 
