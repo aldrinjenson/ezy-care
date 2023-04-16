@@ -29,6 +29,7 @@ export default function Upload() {
   //
   const handleUpload2 = async () => {
     const myJson = {
+      TimeStamp: new Date().toLocaleString(),
       patientName: patientName,
       dateOfBirth: dateOfBirth,
       bloodGroup: bloodGroup,
