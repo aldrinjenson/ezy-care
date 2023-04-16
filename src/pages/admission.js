@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { useEffect } from "react";
+import { addDoc, collection, doc, setDoc, query ,where ,getDocs } from "firebase/firestore";
 import { db } from "@/configs/firebase";
 import { BiSleepy } from "react-icons/bi";
 function Onboarding() {
+  const usersRef = collection(db, "patients");
   const [name, setName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
@@ -11,6 +13,20 @@ function Onboarding() {
 
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
+  const [count, setCount] = useState(0);
+  const q = query(usersRef);
+  const getPatients = async () => {
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      setCount(count + 1);
+      console.log(
+        `${doc.id}  ${doc.data().PatientName} ${doc.data().dateOfBirth}`
+      );
+    });
+  };
+  useEffect(() => {
+    getPatients();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,18 +36,19 @@ function Onboarding() {
     } else {
       toast("Patient registered successfully");
     }
-    
   };
-  const usersRef = collection(db, "patients");
 
   const uploadFireBase = async () => {
     addDoc(usersRef, {
+      TimeStamp: new Date().toLocaleString(),
+      pid: count + 1,
       PatientName: name,
       dateOfBirth: dateOfBirth,
       bloodGroup: bloodGroup,
       contactNumber: contactNumber,
       address: address,
-      email:email,
+      email: email,
+      cid: [],
     });
     //sleep(1000);
   };
@@ -52,8 +69,6 @@ function Onboarding() {
     });
     console.log(`File uploaded: https://web3.storage/ipfs/${cid}`);
   };
-
-
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#FBFAF5]">
@@ -110,25 +125,22 @@ function Onboarding() {
           />
         </div>
         <div className="flex flex-col mb-4">
-          <label
-            htmlFor='email'
-            className='mb-2 font-semibold text-gray-700'
-          >
+          <label htmlFor="email" className="mb-2 font-semibold text-gray-700">
             Email
           </label>
           <input
-            id='email'
-            name='email'
+            id="email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className='border rounded-lg py-2 px-3 text-gray-700'
-            placeholder='Enter email'
+            className="border rounded-lg py-2 px-3 text-gray-700"
+            placeholder="Enter email"
           />
         </div>
-        <div className='flex flex-col mb-4'>
+        <div className="flex flex-col mb-4">
           <label
-            htmlFor='contactNumber'
-            className='mb-2 font-semibold text-gray-700'
+            htmlFor="contactNumber"
+            className="mb-2 font-semibold text-gray-700"
           >
             Contact Number
           </label>
