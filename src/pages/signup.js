@@ -1,24 +1,24 @@
-import Link from 'next/link';
+import Link from "next/link";
 import React, { useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 
 import app, { auth } from "@/configs/firebase";
 import { Router, useRouter } from "next/router";
 
 const SignUp = () => {
-  const [email, setEmail] = useState("allenshibu@outlook.in");
-  const [password, setPassword] = useState("hello123");
-  const [confirmPassword, setConfirmPassword] = useState("hello123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
   const signup = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword){
-      toast("Passwords do not match. Please check and try again")
+    if (password !== confirmPassword) {
+      toast("Passwords do not match. Please check and try again");
     }
 
     await createUserWithEmailAndPassword(auth, email, password)
