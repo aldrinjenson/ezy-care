@@ -1,6 +1,6 @@
-import htmlToPdfmake from "html-to-pdfmake";
 
 export function generateReport(patient) {
+  
   return `
     <html>
       <head>
@@ -73,7 +73,7 @@ export function generateReport(patient) {
         <div class="container">
           <div class="header">
             <h1>EzyCare Report</h1>
-            <img src="${patient.imgUrl}" alt="Patient Image">
+            <img src='${patient?.imgUrl}' alt="Patient Image">
           </div>
 
           <div class="info">
@@ -90,22 +90,3 @@ export function generateReport(patient) {
     </html>
   `;
 }
-
-
-export function generatePdf(patient) {
-  const html = generateReport(patient);
-  const docDefinition = htmlToPdfmake(html);
-  const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-  pdfDocGenerator.getBlob((blob) => {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "report.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  });
-}
-
-
