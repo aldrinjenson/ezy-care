@@ -54,6 +54,22 @@ export default function Dashboard() {
     )
   }
 
+  const startDiagnosis = async () => {
+    setDiagnosis("Please wait...")
+    fetch("http://localhost:3000/api/getadvice", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ symptoms }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setDiagnosis(data.advice)
+      })
+  }
+
   return (
     <div className="h-screen w-full flex flex-row">
       <Sidebar tab={tab} setTab={setTab} />
@@ -81,7 +97,9 @@ export default function Dashboard() {
         )}
         <div className="w-full flex flex-col gap-4">
           <div className="h-64 px-8 py-4 mx-8  my-8 flex flex-col gap-2 bg-slate-100 rounded-xl">
-            <p className="text-2xl font-semibold tracking-wide">Patient Details</p>
+            <p className="text-2xl font-semibold tracking-wide">
+              Patient Details
+            </p>
 
             <div className="w-full h-full flex flex-row justify-between items-center">
               <div className="h-full flex flex-col justify-center items-start gap-4 text-3xl">
@@ -119,12 +137,7 @@ export default function Dashboard() {
                 }}
                 placeholder="Please start recording to generate symptoms"
               ></textarea>
-              <button
-                className="btn"
-                onClick={() => {
-                  setDiagnosis("Diagnosis: " + symptoms)
-                }}
-              >
+              <button className="btn" onClick={startDiagnosis}>
                 Start diagnosis
               </button>
             </div>
@@ -134,16 +147,7 @@ export default function Dashboard() {
                 className="h-full w-full"
                 value={diagnosis}
                 onChange={(e) => setDiagnosis(e.target.value)}
-                placeholder="Please start recording to generate diagnosis"
-              ></textarea>
-            </div>
-            <div className="h-full w-full flex flex-col justify-center items-center gap-4">
-              <p className="text-3xl">Prescriptions</p>
-              <textarea
-                className="h-full w-full"
-                value={diagnosis}
-                onChange={(e) => setDiagnosis(e.target.value)}
-                placeholder="Please start recording to generate diagnosis"
+                placeholder="No diagnosis yet..."
               ></textarea>
             </div>
           </div>
