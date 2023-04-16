@@ -2,14 +2,26 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { db } from "@/configs/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { useRouter } from "next/router";
 
 const getPatients = () => {
+  const router = useRouter();
+
   const [patient, setPatient] = useState("");
   const patientRef = collection(db, "patients");
-  const q = query(patientRef, where("p_id", "==", 432));
-  console.log("HIII", q.data);
+  // const q = query(patientRef, where("pid", "==", 3));
+  // console.log("HIII", q.data);
 
-  const getPatients = async () => {
+  useEffect(() => {
+    if (!router.isReady) return;
+    console.log(router.query);
+    const q = query(patientRef, where("pid", "==", parseInt(router.query.id)));
+    getPatients(q);
+
+    // codes using router.query
+  }, [router.isReady]);
+
+  const getPatients = async (q) => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       console.log(
@@ -24,17 +36,15 @@ const getPatients = () => {
         address: doc.data().address,
         email: doc.data().email,
         cid: doc.data().cid,
+        img: doc.data().patientImageUrl,
       });
     });
   };
-  useEffect(() => {
-    getPatients();
-  }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-16 shadow">
+    <div className="text-black flex flex-col justify-center items-center gap-16 shadow">
       <h1>Patients</h1>
-      <img src="https://placehold.co/400" width={100} height={100} />
+      <img src={patient.img} width={100} height={100} />
       <table class="text-xs my-3">
         <tbody>
           <tr>
