@@ -86,6 +86,10 @@ export default function Home() {
                 ensure that patient data is secure, private and tamper-proof.
               </p>
             </div>
+
+
+
+
           </div>
         </div>
       </div>

@@ -1,89 +1,14 @@
 import { useState } from "react";
 import Link from "next/link";
+import { patients } from "@/utils/utils";
 
-const patients = [
-  {
-    patientId: "001",
-    symptoms: ["Fever", "Cough"],
-    diagnosis: "Flu",
-  },
-  {
-    patientId: "002",
-    symptoms: ["Headache", "Nausea"],
-    diagnosis: "Migraine",
-  },
-  {
-    patientId: "003",
-    symptoms: ["Back pain", "Muscle weakness"],
-    diagnosis: "Herniated disc",
-  },
-  {
-    patientId: "004",
-    symptoms: ["Fatigue", "Joint pain"],
-    diagnosis: "Rheumatoid arthritis",
-  },
-  {
-    patientId: "005",
-    symptoms: ["Chest pain", "Shortness of breath"],
-    diagnosis: "Heart attack",
-  },
-  {
-    patientId: "006",
-    symptoms: ["Frequent urination", "Increased thirst"],
-    diagnosis: "Diabetes",
-  },
-  {
-    patientId: "007",
-    symptoms: ["Abdominal pain", "Nausea"],
-    diagnosis: "Appendicitis",
-  },
-  {
-    patientId: "008",
-    symptoms: ["Fatigue", "Pale skin"],
-    diagnosis: "Anemia",
-  },
-  {
-    patientId: "009",
-    symptoms: ["Chest pain", "Wheezing"],
-    diagnosis: "Asthma",
-  },
-  {
-    patientId: "010",
-    symptoms: ["Sore throat", "Swollen glands"],
-    diagnosis: "Mononucleosis",
-  },
-  {
-    patientId: "011",
-    symptoms: ["Dizziness", "Shortness of breath"],
-    diagnosis: "Pulmonary embolism",
-  },
-  {
-    patientId: "012",
-    symptoms: ["Stomach cramps", "Diarrhea"],
-    diagnosis: "Food poisoning",
-  },
-  {
-    patientId: "013",
-    symptoms: ["Chest pain", "Cough"],
-    diagnosis: "Pneumonia",
-  },
-  {
-    patientId: "014",
-    symptoms: ["Headache", "Stiff neck"],
-    diagnosis: "Meningitis",
-  },
-  {
-    patientId: "015",
-    symptoms: ["Fever", "Rash"],
-    diagnosis: "Measles",
-  },
-];
 
 const Card = ({ patient }) => (
   <Link href={`/patients/${patient.patientId}`}>
     <div className='bg-white rounded-lg shadow-lg p-4 cursor-pointer'>
       <h3 className='text-lg font-bold mb-2'>{patient.diagnosis}</h3>
       <p className='text-gray-700'>{patient.symptoms.join(", ")}</p>
+      <p className='text-gray-700'><b>Diagnosis: </b>{patient.diagnosis}</p>
     </div>
   </Link>
 );

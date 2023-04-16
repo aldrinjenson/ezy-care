@@ -3,6 +3,7 @@ import Image from "next/image";
 import { db } from "@/configs/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/router";
+import { patients } from "@/utils/utils";
 
 const getPatients = () => {
   const router = useRouter();
