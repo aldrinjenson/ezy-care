@@ -1,16 +1,24 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-import { addDoc, collection, doc, setDoc, query ,where ,getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  setDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { db } from "@/configs/firebase";
-import { BiSleepy } from "react-icons/bi";
+import TakePhoto from "@/components/takePhoto";
+
 function Onboarding() {
   const usersRef = collection(db, "patients");
   const [name, setName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [count, setCount] = useState(0);
@@ -28,15 +36,8 @@ function Onboarding() {
     getPatients();
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // if (!name || !dateOfBirth || !bloodGroup || !contactNumber || !address) {
-    if (!name) {
-      toast("Please fill in all the fields");
-    } else {
-      toast("Patient registered successfully");
-    }
-  };
+  const [showUploadPhotoModal, setShowUploadPhotoModal] = useState(false);
+  const [patientImageUrl, setPatientImageurl] = useState(false);
 
   const uploadFireBase = async () => {
     addDoc(usersRef, {
@@ -48,10 +49,30 @@ function Onboarding() {
       contactNumber: contactNumber,
       address: address,
       email: email,
+      patientImageUrl,
       cid: [],
-    });
-    //sleep(1000);
+    })
+      .then(() => {
+        toast("Succesfully added new user");
+      })
+      .catch((err) => {
+        toast(
+          "There seems to be some error in adding right now. Please check details and try again"
+        );
+        console.log(err);
+      });
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // if (!name || !dateOfBirth || !bloodGroup || !contactNumber || !address || !patientImageUrl || !email) {
+    if (!name) {
+      toast("Please fill in all the fields");
+    } else {
+      uploadFireBase();
+    }
+  };
+
   const handleUpload2 = async () => {
     const myJson = {
       patientName: patientName,
@@ -71,106 +92,111 @@ function Onboarding() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#FBFAF5]">
+    <div className='flex flex-col items-center justify-center min-h-screen bg-[#FBFAF5]'>
       <div
-        className="flex flex-col  rounded-lg  shadow-md p-10 bg-[#FBFAF5]"
+        className='flex flex-col  rounded-lg  shadow-md p-10 bg-[#FBFAF5]'
         // onSubmit={uploadFireBase}
       >
-        <h1 className="text-3xl font-semibold mb-5">Patient Admission</h1>
-        <div className="flex flex-col mb-4">
-          <label htmlFor="name" className="mb-2 font-semibold text-gray-700">
+        <h1 className='text-3xl font-semibold mb-5'>Patient Admission</h1>
+        <div className='flex flex-col mb-4'>
+          <label htmlFor='name' className='mb-2 font-semibold text-gray-700'>
             Name
           </label>
           <input
-            type="text"
-            id="name"
-            name="name"
+            type='text'
+            id='name'
+            name='name'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border rounded-lg py-2 px-3 text-gray-700"
-            placeholder="Enter patient name"
+            className='border rounded-lg py-2 px-3 text-gray-700'
+            placeholder='Enter patient name'
           />
         </div>
-        <div className="flex flex-col mb-4">
+        <div className='flex flex-col mb-4'>
           <label
-            htmlFor="dateOfBirth"
-            className="mb-2 font-semibold text-gray-700"
+            htmlFor='dateOfBirth'
+            className='mb-2 font-semibold text-gray-700'
           >
             Date of Birth
           </label>
           <input
-            type="date"
-            id="dateOfBirth"
-            name="dateOfBirth"
+            type='date'
+            id='dateOfBirth'
+            name='dateOfBirth'
             value={dateOfBirth}
             onChange={(e) => setDateOfBirth(e.target.value)}
-            className="border rounded-lg py-2 px-3 text-gray-700"
+            className='border rounded-lg py-2 px-3 text-gray-700'
           />
         </div>
-        <div className="flex flex-col mb-4">
+        <div className='flex flex-col mb-4'>
           <label
-            htmlFor="bloodGroup"
-            className="mb-2 font-semibold text-gray-700"
+            htmlFor='bloodGroup'
+            className='mb-2 font-semibold text-gray-700'
           >
             Blood Group
           </label>
           <input
-            type="text"
-            id="bloodGroup"
-            name="bloodGroup"
+            type='text'
+            id='bloodGroup'
+            name='bloodGroup'
             value={bloodGroup}
             onChange={(e) => setBloodGroup(e.target.value)}
-            className="border rounded-lg py-2 px-3 text-gray-700"
-            placeholder="Enter blood group"
+            className='border rounded-lg py-2 px-3 text-gray-700'
+            placeholder='Enter blood group'
           />
         </div>
-        <div className="flex flex-col mb-4">
-          <label htmlFor="email" className="mb-2 font-semibold text-gray-700">
+        <div className='flex flex-col mb-4'>
+          <label htmlFor='email' className='mb-2 font-semibold text-gray-700'>
             Email
           </label>
           <input
-            id="email"
-            name="email"
+            id='email'
+            name='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border rounded-lg py-2 px-3 text-gray-700"
-            placeholder="Enter email"
+            className='border rounded-lg py-2 px-3 text-gray-700'
+            placeholder='Enter email'
           />
         </div>
-        <div className="flex flex-col mb-4">
+        <div className='flex flex-col mb-4'>
           <label
-            htmlFor="contactNumber"
-            className="mb-2 font-semibold text-gray-700"
+            htmlFor='contactNumber'
+            className='mb-2 font-semibold text-gray-700'
           >
             Contact Number
           </label>
           <input
-            type="tel"
-            id="contactNumber"
-            name="contactNumber"
+            type='tel'
+            id='contactNumber'
+            name='contactNumber'
             value={contactNumber}
             onChange={(e) => setContactNumber(e.target.value)}
-            className="border rounded-lg py-2 px-3 text-gray-700"
-            placeholder="Enter contact number"
+            className='border rounded-lg py-2 px-3 text-gray-700'
+            placeholder='Enter contact number'
           />
         </div>
-        <div className="flex flex-col mb-4">
-          <label htmlFor="address" className="mb-2 font-semibold text-gray-700">
+        <div className='flex flex-col mb-4'>
+          <label htmlFor='address' className='mb-2 font-semibold text-gray-700'>
             Address
           </label>
           <textarea
-            id="address"
-            name="address"
+            id='address'
+            name='address'
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            className="border rounded-lg py-2 px-3 text-gray-700"
-            placeholder="Enter address"
+            className='border rounded-lg py-2 px-3 text-gray-700'
+            placeholder='Enter address'
           ></textarea>
         </div>
-        <button
-          onClick={uploadFireBase}
-          className="bg-blue-500 rounded-md py-3"
-        >
+        {showUploadPhotoModal ? (
+          <TakePhoto
+            onClose={() => setShowUploadPhotoModal(false)}
+            setImageUrl={setPatientImageurl}
+          />
+        ) : (
+          <h2 onClick={() => setShowUploadPhotoModal(true)}>Upload Photo</h2>
+        )}
+        <button onClick={handleSubmit} className='bg-blue-500 rounded-md py-3'>
           Register
         </button>
       </div>
