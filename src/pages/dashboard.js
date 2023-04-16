@@ -78,22 +78,32 @@ export default function Dashboard() {
           </div>
         )}
         <div className="w-full flex flex-col gap-4">
-          <div className="h-64 px-8 mx-8 flex flex-col gap-2 bg-slate-100 rounded-xl">
-            <p className="text-2xl">Patient Details</p>
-            <button onClick={() => setShouldShowModal(true)}>
-              Next Patient
-            </button>
-            <Link href={`/patient/${patientId}`}>View More Details</Link>
-            <div className="h-full flex flex-col justify-center items-start gap-4 text-3xl">
-              <p>
-                Name: <span className="font-bold">John Doe</span>
-              </p>
-              <p>
-                Patient ID: <span className="font-bold">{patientId}</span>
-              </p>
-              <p>
-                Age: <span className="font-bold">65</span>
-              </p>
+          <div className="h-64 px-8 py-4 mx-8  my-8 flex flex-col gap-2 bg-slate-100 rounded-xl">
+            <p className="text-2xl font-semibold tracking-wide">Patient Details</p>
+
+            <div className="w-full h-full flex flex-row justify-between items-center">
+              <div className="h-full flex flex-col justify-center items-start gap-4 text-3xl">
+                <p>
+                  Name: <span className="font-bold">John Doe</span>
+                </p>
+                <p>
+                  Patient ID: <span className="font-bold">{patientId}</span>
+                </p>
+                <p>
+                  Age: <span className="font-bold">65</span>
+                </p>
+                <Link href={`/patient/${patientId}`} className="text-sm">
+                  View More Details
+                </Link>
+              </div>
+              <div className="flex flex-col justify-center items-center gap-4">
+                <button
+                  onClick={() => setShouldShowModal(true)}
+                  className="btn"
+                >
+                  Next Patient
+                </button>
+              </div>
             </div>
           </div>
           <div className="w-full h-72 flex flex-row justify-evenly items-center">
