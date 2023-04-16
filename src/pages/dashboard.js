@@ -1,13 +1,14 @@
-import axios from 'axios'
+import axios from "axios";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { db } from "@/configs/firebase";
 import { signOut } from "firebase/auth";
 import app, { auth } from "@/configs/firebase";
-import { getAuth } from "firebase/auth";
 import { MdLogout } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import Navbar from "@/components/Navbar";
 import dynamic from "next/dynamic";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const Recorder = dynamic(() => import("@/components/Recorder"), {
   ssr: false,
@@ -19,30 +20,13 @@ import Scanner from "@/components/Scanner"
 import { Blob } from "web3.storage";
 
 export default function Dashboard() {
-    const handleUpload2 = async () => {
-      const myJson = {
-        patientName: patientName,
-        dateOfBirth: dateOfBirth,
-        bloodGroup: bloodGroup,
-        contactNumber: contactNumber,
-        address: address,
-      };
-      const jsonString = JSON.stringify(myJson);
-      const blob = new Blob([jsonString], { type: "application/pdf" });
-      const fileName = name + ".json";
-      const cid = await client.put([blob], {
-        wrapWithDirectory: false,
-        name: fileName,
-      });
-      console.log(`File uploaded: https://web3.storage/ipfs/${cid}`);
-    };
-
-  const [symptoms, setSymptoms] = useState("")
-  const [diagnosis, setDiagnosis] = useState("")
-  const [tab, setTab] = useState("home")
-  const [accountActionsOpen, setAccountActionsOpen] = useState(false)
-  const [patientId, setPatientId] = useState(null)
-  const [shouldShowModal, setShouldShowModal] = useState(false)
+  const [symptoms, setSymptoms] = useState("");
+  const [diagnosis, setDiagnosis] = useState("");
+  const [tab, setTab] = useState("home");
+  const [accountActionsOpen, setAccountActionsOpen] = useState(false);
+  const [patientId, setPatientId] = useState(43);
+  const [shouldShowModal, setShouldShowModal] = useState(false);
+  const [patient, setPatient] = useState({});
 
   const logout = () => {
     signOut(auth)
@@ -53,13 +37,37 @@ export default function Dashboard() {
         toast("Error in signing out!");
       });
   };
+  const getPatientDetails = async (patientId) => {
+    const patientRef = collection(db, "patients");
+    const q = query(patientRef, where("pid", "==", parseInt(patientId)));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      console.log(
+        `${doc.id}  ${doc.data().PatientName} ${doc.data().dateOfBirth}`
+      );
+      setPatient({
+        id: doc.id,
+        PatientName: doc.data().PatientName,
+        dateOfBirth: doc.data().dateOfBirth,
+        bloodGroup: doc.data().bloodGroup,
+        contactNumber: doc.data().contactNumber,
+        address: doc.data().address,
+        email: doc.data().email,
+        cid: doc.data().cid,
+        img: doc.data().patientImageUrl,
+      });
+    });
+  };
+   console.log({patient});
+   
 
   useEffect(() => {
-    // print()
 
     if (patientId) {
       console.log({ patientId });
       // fetch details from firebase and prefill name, age etc dynamically
+      getPatientDetails(patientId);
+
       setShouldShowModal(false);
     } else {
       // setShouldShowModal(true);
@@ -85,6 +93,9 @@ export default function Dashboard() {
         console.error(error);
       });
   };
+
+  console.log({patientId});
+  
 
   if (shouldShowModal) {
     return (

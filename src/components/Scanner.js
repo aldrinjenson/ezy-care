@@ -5,8 +5,8 @@ function Scanner({ onClose, setPatientId }) {
   const [result, setResult] = useState("");
 
   const { ref } = useZxing({
-    onResult(result) {
-      setResult(result.getText());
+    onResult(res) {
+      if (res && res.getText()?.length) setResult(res.getText());
     },
   });
 
@@ -43,7 +43,7 @@ function Scanner({ onClose, setPatientId }) {
           </button> */}
           <button
             className='px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-white'
-            onClick={() => setPatientId(result)}
+            onClick={() => result?.length && setPatientId(result)}
           >
             Continue
           </button>
