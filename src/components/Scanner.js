@@ -34,13 +34,13 @@ function Scanner({ onClose, setPatientId }) {
             </p>
           ) : null}
         </div>
-        <div className='flex justify-between mt-4'>
-          <button
+        <div className='flex justify-center mt-4'>
+          {/* <button
             className='px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg'
             onClick={onClose}
           >
             Close
-          </button>
+          </button> */}
           <button
             className='px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-white'
             onClick={() => setPatientId(result)}

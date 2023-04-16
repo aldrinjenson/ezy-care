@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
-
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import Link from "next/link";
+import { signOut } from "firebase/auth";
 import app, { auth } from "@/configs/firebase";
 import { MdLogout } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
@@ -24,41 +20,26 @@ export default function Dashboard() {
   const [diagnosis, setDiagnosis] = useState("");
   const [tab, setTab] = useState("home");
   const [accountActionsOpen, setAccountActionsOpen] = useState(false);
-
-  const [email, setEmail] = useState("allenshibu@outlook.in");
-  const [password, setPassword] = useState("hello123");
-
   const [patientId, setPatientId] = useState(null);
   const [shouldShowModal, setShouldShowModal] = useState(false);
-
-  const signup = async (e) => {
-    e.preventDefault();
-
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-  };
 
   const logout = () => {
     signOut(auth)
       .then(() => {
         toast("Signed out successfully");
       })
-      .catch((error) => {});
+      .catch((error) => {
+        toast("Error in signing out!");
+      });
   };
 
   useEffect(() => {
     if (patientId) {
-      console.log({patientId});
+      console.log({ patientId });
       // fetch details from firebase and prefill name, age etc dynamically
       setShouldShowModal(false);
+    } else {
+      // setShouldShowModal(true);
     }
   }, [patientId]);
 
@@ -98,7 +79,10 @@ export default function Dashboard() {
         <div className='w-full flex flex-col gap-4'>
           <div className='h-64 px-8 mx-8 flex flex-col gap-2 bg-slate-100 rounded-xl'>
             <p className='text-2xl'>Patient Details</p>
-            <button onClick={()=>setShouldShowModal(true)}>Next Patient</button>
+            <button onClick={() => setShouldShowModal(true)}>
+              Next Patient
+            </button>
+            <Link href={`/patient/${patientId}`}>View More Details</Link>
             <div className='h-full flex flex-col justify-center items-start gap-4 text-3xl'>
               <p>
                 Name: <span className='font-bold'>John Doe</span>
