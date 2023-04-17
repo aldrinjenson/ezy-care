@@ -128,7 +128,7 @@ export default function Dashboard() {
 
   const handleGeneratePdf = () => {
     axios
-      .post("http://localhost:3000/api/generatepdf", dummyPatient)
+      .post("/api/generatepdf", dummyPatient)
       .then((response) => {
         console.log(response.data);
       })
@@ -149,7 +149,7 @@ export default function Dashboard() {
 
   const startDiagnosis = async () => {
     setDiagnosis("Please wait...");
-    fetch("http://localhost:3000/api/getadvice", {
+    fetch("/api/getadvice", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

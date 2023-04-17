@@ -17,9 +17,6 @@ export default async function handler(req, res) {
     presence_penalty: 0,
   })
 
-  console.log(response)
-  console.log("Dfsdffds")
-
   console.log(response.data.choices[0].text)
 
   res.status(200).json({ advice: response.data.choices[0].text })
